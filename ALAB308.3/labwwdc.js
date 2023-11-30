@@ -36,11 +36,29 @@ for (let i = 0; i < csvArray.length; i++){
   
   // Process each row to split columns and store in the array
   rows.forEach(row => {
-    let columns = row.split(','); // Split each row into columns based on comma ','
+    let columns = row.split(','); // Split each row into columns based on \n ','
     csvArray2.push(columns);
   });
   
   console.log(csvArray2);
 
 
-  //Part 3
+//Part 3: Transforming Data
+
+let objectsArray = []
+let keys = csvArray2[0]
+
+//console.log(keys)
+
+for (let i = 1; i < csvArray2.length; i++) {
+    let object = {}
+    for (let j = 0; j < keys.length; j++) {
+        object[keys[j]] = csvArray2[i][j]
+    }
+    objectsArray.push(object)
+}
+
+console.log(objectsArray)
+
+
+//Part 4: Sorting and Manipulating Data
