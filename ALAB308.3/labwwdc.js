@@ -36,7 +36,7 @@ for (let i = 0; i < csvArray.length; i++){
   
   // Process each row to split columns and store in the array
   rows.forEach(row => {
-    let columns = row.split(','); // Split each row into columns based on \n ','
+    let columns = row.split(','); // Split each row into columns based on the commas ','
     csvArray2.push(columns);
   });
   
@@ -45,20 +45,72 @@ for (let i = 0; i < csvArray.length; i++){
 
 //Part 3: Transforming Data
 
+//create an array of objects
 let objectsArray = []
-let keys = csvArray2[0]
+//make the keys the first row of the array and lowercase
+let keys = csvArray2[0] 
+let lcKeys = keys.map(obj => obj.toLowerCase())
+console.log(lcKeys)
 
-//console.log(keys)
 
+//loop through the remaining rows to create objects
 for (let i = 1; i < csvArray2.length; i++) {
     let object = {}
-    for (let j = 0; j < keys.length; j++) {
-        object[keys[j]] = csvArray2[i][j]
+    for (let j = 0; j < lcKeys.length; j++) {
+        object[lcKeys[j]] = csvArray2[i][j] //create the object properties
     }
-    objectsArray.push(object)
+    objectsArray.push(object) //push everything to the object array
 }
 
 console.log(objectsArray)
 
 
 //Part 4: Sorting and Manipulating Data
+
+//remove the last element from the sorted array
+objectsArray.pop()
+console.log(objectsArray)
+//csvArray2.pop()
+//console.log(csvArray2)
+
+//insert an object at index1
+let barry = objectsArray.splice(1, 0, { id: "48", name: "Barry", occupation: "Runner", age: "25" })
+console.log(objectsArray)
+
+//adding an object to the end of an array
+let bilbo = objectsArray.push({ id: "7", name: "Bilbo", occupation: "None", age: "111" })
+console.log(objectsArray)
+
+//using the values of each object to find the average age of the group using a loop
+let sumOfAges = 0
+
+for (let k = 0; k < objectsArray.length; k++) {
+    sumOfAges += parseInt(objectsArray[k].age)  //convert ages to Int
+}
+let averageAge = sumOfAges / objectsArray.length
+
+
+console.log(objectsArray.length)
+console.log(sumOfAges)
+console.log(averageAge)
+
+
+//part 5: full circle
+
+//convert back to csv format
+function convertToCSV(data) {
+    let csv = ''
+
+
+let headerRow = Object.keys(data[0]).join(',')
+csv += headerRow
+
+    for (let obj of data) {
+        let values = Object.values(obj).join(',')
+        csv += values
+    }
+    return csv
+}
+
+let csvString = convertToCSV(objectsArray);
+console.log(csvString); 
